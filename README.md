@@ -38,3 +38,30 @@ Hit API using curl:
 >curl -X 'GET' 'https://fastapi-demo-app-mrbe4zqmdq-uw.a.run.app/' -H 'accept: application/json'
 {"message":"Hello world! From FastAPI running on Uvicorn with Gunicorn. Using Python 3.9"}
 ```
+
+## Require Auth
+
+```
+export PROJECT_ID="$( gcloud config get-value project )"
+gcloud builds submit --tag gcr.io/$PROJECT_ID/my-fastapi-app
+gcloud run deploy fastapi-auth-demo-app --image=gcr.io/$PROJECT_ID/my-fastapi-app --platform=managed --no-allow-unauthenticated
+```
+
+Now curl gets 403:
+
+```
+>curl -i 'https://fastapi-auth-demo-app-mrbe4zqmdq-uw.a.run.app/' -H "Content-Type: application/json"
+HTTP/2 403
+date: Sun, 25 Apr 2021 18:16:40 GMT
+content-type: text/html; charset=UTF-8
+server: Google Frontend
+content-length: 295
+...
+```
+
+If we add ID token as bearer authorization header then it works again:
+
+```
+>curl 'https://fastapi-auth-demo-app-mrbe4zqmdq-uw.a.run.app/' -H "Content-Type: application/json" -H "Authorization: Bearer $(gcloud auth print-identity-token)"
+{"message":"Hello world! From FastAPI running on Uvicorn with Gunicorn. Using Python 3.9"}
+```
