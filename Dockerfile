@@ -4,11 +4,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && pip install --no-cache-dir "uvicorn[standard]" gunicorn fastapi \
     && apt-get purge -y --auto-remove gcc libc-dev
-COPY ./start.sh ./start-reload.sh /
-#RUN chmod +x /start.sh
-COPY ./gunicorn_conf.py /gunicorn_conf.py
-#COPY ./start-reload.sh /start-reload.sh
-#RUN chmod +x /start-reload.sh
+COPY ./start.sh ./start-reload.sh ./gunicorn_conf.py /
 COPY ./app /app
 WORKDIR /app/
 ENV PYTHONPATH=/app

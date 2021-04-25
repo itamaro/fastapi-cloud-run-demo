@@ -27,9 +27,7 @@ Hit API using curl:
 ```
 export PROJECT_ID="$( gcloud config get-value project )"
 gcloud builds submit --tag gcr.io/$PROJECT_ID/my-fastapi-app
-gcloud run deploy --image gcr.io/$PROJECT_ID/my-fastapi-app --platform=managed
-# choose region (e.g. us-west1)
-# Allow unauthenticated invocations to [fastapi-demo-app] (y/N)?  y
+gcloud run deploy fastapi-demo-app --image=gcr.io/$PROJECT_ID/my-fastapi-app --platform=managed --allow-unauthenticated
 ```
 
 Access bulitin API docs on https://fastapi-demo-app-mrbe4zqmdq-uw.a.run.app/docs
