@@ -10,7 +10,7 @@ Google Cloud Run build & deploy based on https://cloud.google.com/run/docs/quick
 
 ```
 docker build -t my-fastapi-app .
-docker run -it --rm -p 5000:80 my-fastapi-app /start-reload.sh
+docker run -it --rm -v $PWD/app -p 5000:80 my-fastapi-app /start-reload.sh
 ```
 
 Access builtin API docs on http://localhost:5000/docs
